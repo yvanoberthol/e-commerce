@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <title>Liste des utilisateurs et roles</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" layout:fragment="content">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Liste des utilisateurs et roles</div>
+            <div class="panel panel-body">
+                <form th:action="@{/userRoles}" method="get">
+                    <div class="form-group form-inline">
+                        <label class="control-label"><strong>username à rechercher</strong></label>
+                        <input type=text class="form-control text-center" name="motcle">
+                        <button type="submit" class="form-control btn btn-primary">Chercher</button>
+                    </div>
+                </form>
+                <div>
+                    <h4 class="text-center">
+                        <span th:text="${msg}" class="text-danger"></span>
+                        <span th:text="${msg1}" class="text-info"></span>
+                    </h4>
+                </div>
+                <table class="table table-striped table-responsive">
+                    <tr>
+                        <th>UserName</th>
+                        <th>Role</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                    <tr th:each="u:${users}">
+                        <td th:text="${u.username}"></td>
+                        <td>
+                            [<span th:each="r:${u.roles}">
+                            <a href="" th:href="@{/suppUserRole(user_id=${u.id},role_id=${r.id})}" th:text="${r.role}">
+                            </a>,  </span>]
+                        </td>
+                        <td>
+                            <span>Pour enlever un rôle à l'utilisateur cliquer sur un de ses rôles</span>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li th:class="${status.index == pageCourante}? 'active': ''" th:each="p,status:${pages}">
+                            <a th:href="@{/userRoles(motcle=${motcle},page=${status.index})}" th:text="${status.index+1}"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/userRoles}">Tous les roles</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/formUserRole}">Ajouter un role à l'utilisateur</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

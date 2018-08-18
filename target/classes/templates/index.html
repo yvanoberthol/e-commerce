@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/canvasjs.min.js}" ></script>
+    <title>Liste des employés</title>
+    <style>
+       /* .ct-label {
+            !*font-size: 20px;*!
+            font-size: 10px;
+        }*/
+         td{
+             vertical-align: middle;
+         }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsed">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">E-Commerce</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="collapsed">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Categories <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/categorie/form}">Ajouter une categorie</a></li>
+                                <li><a th:href="@{/categories}">Liste des categories</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Produits <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/produit/form}">Ajouter un produit</a></li>
+                                <li><a th:href="@{/produits}">Liste des produits</a></li>
+                                <li><a th:href="@{/produitStat}">Graphe sur les produits par catégorie</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                utilisateurs <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/users}">Liste des utilisateurs</a></li>
+                                <li><a th:href="@{/userRoles}">Liste des comptes et roles</a></li>
+                                <li><a th:href="@{/formUser}">Ajouter un utilisateur</a></li>
+                                <li><a th:href="@{/formUserRole}">Ajouter un role à l'utilisateur</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                roles <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/roles}">Liste des roles</a></li>
+                                <li><a th:href="@{/formRole}">Ajouter un role</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span th:text="${#httpServletRequest.remoteUser}"></span> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-user"></span> Déconnexion</a></li>
+                                <li><a th:href="@{/form1User}"><span class="glyphicon glyphicon-lamp"></span> Modifier mon compte</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <h4 class="text-center">
+            <span class="text-success">Vous êtes connecté(e) ... </span>
+        </h4>
+    </div>
+    <div layout:fragment="content">
+        <img th:src="@{/gifs/loading51.gif}" src="../static/gifs/loading51.gif" style="margin-top: 238px; margin-bottom: auto">
+    </div>
+    <!--<div class="row bg-primary">
+        <div class="navbar navbar-fixed-bottom navbar-inverse text-center">
+            <h2>Yvanscoop inc Derrogation</h2>
+        </div>
+    </div>-->
+</div>
+<script th:src="@{/js/jquery.js}" src="../static/js/jquery.js"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script type="text/javascript">
+    $(function () {
+        var elems = document.getElementsByTagName("td");
+
+        for (var i = 0; i<elems.length; i++) {
+            elems[i].style.verticalAlign = "middle";
+        }
+    });
+</script>
+</body>
+</html>

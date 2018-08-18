@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un utilisateur</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Ajout d'un utilisateur</div>
+            <div class="panel panel-body">
+                <form th:action="@{/ajoutUser}" method="post">
+                    <div class="form-group">
+                        <label class="control-label">Username</label>
+                        <input type="text" name="username" class="form-control" th:value="${user.username}">
+                        <span class="text-center text-danger" th:errors="${user.username}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Password</label>
+                        <input type="text" name="password" class="form-control" th:value="${user.password}">
+                        <span class="text-center text-danger" th:errors="${user.password}"></span>
+                    </div>
+                    <div class="form-group">
+                            <label class="control-label">Actif</label>
+                            <input th:type="checkbox" th:checked="${user.isActive()}" th:name="active">
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

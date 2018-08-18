@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <title>Liste des catégories</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" layout:fragment="content">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Liste des catégories</div>
+            <div class="panel panel-body">
+                <h3 class="text-center" th:if="${total <= 0}">
+                    Aucune catégorie disponible pour l'instant....
+                </h3>
+                <form th:action="@{/categories}" method="get" th:if="${total > 0}">
+                    <div class="form-group form-inline">
+                        <label class="control-label"><strong>Categorie par nom</strong></label>
+                        <input type=text class="form-control text-center" name="code">
+                        <button type="submit" class="form-control btn btn-primary">Chercher</button>
+                    </div>
+                </form>
+                <table class="table table-responsive table-bordered text-center" th:if="${total >0}">
+                    <tr class="bg-success">
+                        <th>ID</th>
+                        <th>nom</th>
+                        <th>Description</th>
+                        <th>Photo</th>
+                        <th>Actions</th>*
+                        <th>Total : <span th:text="${total}" style="color: darkblue; background-color: #b2dbfb"></span> catégorie(s)</th>
+                    </tr>
+                    <tr th:each="c:${categories}">
+                        <td th:text="${c.idCategorie}"></td>
+                        <td th:text="${c.nomCategorie}"></td>
+                        <td th:text="${c.description}"></td>
+                        <td><img th:src="@{/categorie/photo(idCat=${c.idCategorie})}" width="100px" height="100px"></td>
+                        <td>
+                            <a th:href="@{/categorie/editForm(idCat=${c.idCategorie})}"><button class="btn btn-info">Modifier</button></a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp" th:attrappend="data-target=${c.idCategorie}">Supprimer</button>
+                            <div class="modal modalSupp fade" id="confirmationSupp" tabindex="-1" role="dialog"  th:attrappend="id=${c.idCategorie}">
+                                <div class="modal-dialog modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: royalblue">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Supprimer une categorie</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Voulez vous supprimer la categorie <strong><span th:text="${c.nomCategorie}" class="text-info"></span></strong>?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <a th:href="@{/categorie/delete(idCat=${c.idCategorie})}">
+                                                <button type="button" class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li th:class="${status.index == pageCourante}? 'active': ''" th:each="p,status:${pages}">
+                            <a th:href="@{/categories(nom=${code},page=${status.index})}" th:text="${status.index+1}"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/categories}">Tous les catégories</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

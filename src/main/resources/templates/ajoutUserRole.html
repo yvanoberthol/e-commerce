@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un role à l'utilisateur</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Ajout d'un role à l'utilisateur</div>
+            <div class="panel panel-body">
+                <form th:action="@{/ajoutUserRole}" method="post">
+                    <div class="text-center">
+                        <h5>
+                            <span th:text="${username}" class="text-info"></span>
+                            <span th:text="${msg1}" class="text-danger"></span>
+                            <span th:text="${role}" class="text-info"></span>
+                        </h5>
+                    </div>
+                    <div class="text-center">
+                        <h5>
+                            <span th:text="${msg}" class="text-success"></span>
+                        </h5>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Utilisateur</label>
+                        <select name="user_id" class="form-control text-center">
+                            <option th:each="u:${users}" th:value="${u.id}" th:text="${u.username}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Rôle</label>
+                        <select name="roles_id" class="form-control text-center">
+                            <option th:each="r:${roles}" th:value="${r.id}" th:text="${r.role}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" name="ajouter" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+            <div class="panel panel-footer">
+                <h5 class="text-center">
+                    NB: <span class="text-warning">les rôles pendront effet après </span>
+                    <u><a th:href="@{/logout}">reconnexion</a></u>
+                    <span class="text-warning"> si vous êtes déja connecté(e)</span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

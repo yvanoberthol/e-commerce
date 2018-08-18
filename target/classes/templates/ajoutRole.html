@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un role</title>
+</head>
+<body>
+<div class="row" layout:fragment="content">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Ajout d'un rôle</div>
+            <div class="panel panel-body">
+                <form th:action="@{/ajoutRole}" method="post" name="form" accept-charset="ISO-8859-1">
+                    <div class="form-group">
+                        <label class="control-label">Role</label>
+                        <input type="text" name="role" class="form-control" th:value="${role.role}" required>
+                        <span class="text-center text-danger" th:errors="${role.role}"></span>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

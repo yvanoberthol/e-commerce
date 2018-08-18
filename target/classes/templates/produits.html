@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="index">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="stylesheet" href="css/bootstrap.css">-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <title>Liste des produits</title>
+</head>
+<body>
+<div class="container">
+    <div class="row" layout:fragment="content">
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">Liste des produits</div>
+            <div class="panel panel-body">
+                <h3 class="text-center" th:if="${total <=0}">
+                    Aucun produit disponible pour l'instant....
+                </h3>
+                <form th:action="@{/produits}" method="get" th:if="${total >0}">
+                    <div class="form-group form-inline">
+                        <label class="control-label"><strong>recherche par nom</strong></label>
+                        <input type=text class="form-control text-center" name="code">
+                        <button type="submit" class="form-control btn btn-primary">Chercher</button>
+                    </div>
+                </form>
+                <table class="table table-responsive table-bordered text-center" th:if="${total >0}">
+                    <tr class="bg-success">
+                        <th>ID</th>
+                        <th>Designation</th>
+                        <th>prix</th>
+                        <th>photo</th>
+                        <th>Quantité</th>
+                        <th>Selected</th>
+                        <th>Actions</th>*
+                        <th>Total : <span th:text="${total}" style="color: darkblue; background-color: #b2dbfb"></span> produit(s)</th>
+                    </tr>
+                    <tr th:each="p:${produits}">
+                        <td th:text="${p.idProduit}"></td>
+                        <td th:text="${p.designation}"></td>
+                        <td th:text="${p.prix}"></td>
+                        <td><img th:src="@{/produit/photo(idProd=${p.idProduit})}" width="100px" height="100px"></td>
+                        <td th:text="${p.quantite}"></td>
+                        <td th:text="${p.selectionne}"></td>
+                        <td>
+                            <a th:href="@{/produit/editForm(idProd=${p.idProduit})}"><button class="btn btn-info">Modifier</button></a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmationSupp" th:attrappend="data-target=${p.idProduit}">Supprimer</button>
+                            <div class="modal modalSupp fade" id="confirmationSupp" tabindex="-1" role="dialog"  th:attrappend="id=${p.idProduit}">
+                                <div class="modal-dialog modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: royalblue">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Supprimer un produit</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Voulez vous supprimer le produit <strong><span th:text="${p.designation}" class="text-info"></span></strong>?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <a th:href="@{/produit/delete(idProd=${p.idProduit})}">
+                                                <button type="button" class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li th:class="${status.index == pageCourante}? 'active': ''" th:each="p,status:${pages}">
+                            <a th:href="@{/categories(nom=${code},page=${status.index})}" th:text="${status.index+1}"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/produits}">Tous les produits</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
